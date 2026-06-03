@@ -1,131 +1,342 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Alpine - Your AI Skiing Companion. Launching August 1, 2026. Join the waitlist for premium AI-powered ski guidance.">
-    <title>Alpine | Launching August 1, 2026</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="https://via.placeholder.com/32x32/0a1428/00d4ff?text=🏔️" type="image/x-icon">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Playfair+Display:wght@600;700&amp;display=swap');
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alpline — Coming Soon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      font-family: 'Inter', sans-serif;
+      background: #0d1117;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    /* Background */
+    .bg {
+      position: fixed;
+      inset: 0;
+      background: url('https://images.unsplash.com/photo-1551524559-8af4e6624178?w=1800&q=80') center/cover no-repeat;
+      z-index: 0;
+    }
+    .bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(13,17,23,0.45) 0%,
+        rgba(13,17,23,0.62) 45%,
+        rgba(13,17,23,0.93) 100%
+      );
+    }
+
+    /* Navbar — matches the site exactly */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      height: 60px;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+    .nav-logo img {
+      height: 28px;
+      width: auto;
+      mix-blend-mode: lighten;
+    }
+    .nav-logo span {
+      font-size: 17px;
+      font-weight: 500;
+      color: #fff;
+      letter-spacing: 0.01em;
+    }
+    .nav-dots {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+    }
+    .nav-dot {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+    }
+
+    /* Main */
+    main {
+      position: relative;
+      z-index: 2;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 1.5rem;
+      gap: 0;
+    }
+
+    /* Eyebrow */
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #2BB2FC;
+      margin-bottom: 1.1rem;
+      opacity: 0;
+      animation: up 0.7s 0.1s forwards;
+    }
+
+    /* Headline */
+    h1 {
+      font-size: clamp(48px, 8.5vw, 96px);
+      font-weight: 700;
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.25rem;
+      opacity: 0;
+      animation: up 0.7s 0.25s forwards;
+    }
+    h1 em {
+      font-style: normal;
+      color: #2BB2FC;
+    }
+
+    /* Sub */
+    .sub {
+      font-size: clamp(14px, 1.6vw, 16px);
+      font-weight: 300;
+      color: rgba(255,255,255,0.6);
+      max-width: 480px;
+      line-height: 1.65;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: up 0.7s 0.4s forwards;
+    }
+
+    /* Stats row — matches the site's "200+ Resorts / Live Conditions / AI Powered" */
+    .stats {
+      display: flex;
+      gap: 3rem;
+      margin-bottom: 3.5rem;
+      opacity: 0;
+      animation: up 0.7s 0.55s forwards;
+    }
+    .stat-val {
+      font-size: 22px;
+      font-weight: 600;
+      color: #2BB2FC;
+      display: block;
+    }
+    .stat-label {
+      font-size: 12px;
+      color: rgba(255,255,255,0.45);
+      margin-top: 2px;
+      display: block;
+    }
+
+    /* Countdown */
+    .countdown {
+      display: flex;
+      align-items: flex-start;
+      gap: clamp(12px, 3vw, 36px);
+      opacity: 0;
+      animation: up 0.7s 0.7s forwards;
+    }
+    .unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .num-wrap {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: clamp(10px,2vw,18px) clamp(14px,2.5vw,26px);
+      backdrop-filter: blur(10px);
+    }
+    .num {
+      font-size: clamp(36px, 6vw, 68px);
+      font-weight: 600;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      font-variant-numeric: tabular-nums;
+      min-width: 2ch;
+      text-align: center;
+      display: block;
+    }
+    .unit-label {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+    }
+    .sep {
+      font-size: clamp(36px, 6vw, 68px);
+      font-weight: 300;
+      color: #2BB2FC;
+      opacity: 0.4;
+      line-height: 1;
+      padding-top: clamp(10px,2vw,18px);
+    }
+
+    .launched {
+      display: none;
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 600;
+      color: #2BB2FC;
+      letter-spacing: -0.01em;
+    }
+
+    /* CTA pill — matches the site's "Get Started" button style */
+    .cta {
+      margin-top: 2.5rem;
+      opacity: 0;
+      animation: up 0.7s 0.85s forwards;
+    }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #2BB2FC;
+      color: #0d1117;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 11px 24px;
+      border-radius: 50px;
+      border: none;
+      cursor: default;
+      letter-spacing: 0.01em;
+    }
+    .cta-note {
+      margin-top: 10px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.25);
+    }
+
+    @keyframes up {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 520px) {
+      .stats { gap: 1.75rem; }
+      nav { padding: 0 1.25rem; }
+    }
+  </style>
 </head>
 <body>
-    <!-- Background -->
-    <div class="background"></div>
-    <canvas id="snowfall"></canvas>
 
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <div class="nav">
-                <div class="logo">
-                    <span class="logo-icon">🏔️</span>
-                    <span class="logo-text">Alpine</span>
-                </div>
-                <nav class="nav-links">
-                    <a href="#" class="nav-link">Features</a>
-                    <a href="#" class="nav-link">Resorts</a>
-                    <a href="#" class="nav-link">Reviews</a>
-                </nav>
-                <div class="nav-actions">
-                    <button onclick="document.getElementById('signup-section').scrollIntoView({ behavior: 'smooth' })" 
-                            class="btn-primary">Join Waitlist</button>
-                </div>
-            </div>
-        </div>
-    </header>
+<div class="bg"></div>
 
-    <!-- Hero -->
-    <section class="hero">
-        <div class="container hero-content">
-            <div class="badge">INTELLIGENT SKI COMPANION</div>
-            
-            <h1 class="main-heading">
-                Your Mountain,<br>
-                <span class="accent">Perfected</span>
-            </h1>
-            
-            <p class="tagline">Your AI Skiing Companion</p>
-            
-            <!-- Countdown -->
-            <div class="countdown-card">
-                <div class="countdown-header">
-                    <span class="launch-date">Launching August 1, 2026 • 18:00 BST</span>
-                </div>
-                <div id="countdown" class="countdown">
-                    <div class="time-block">
-                        <div id="days" class="time-value">00</div>
-                        <div class="time-label">Days</div>
-                    </div>
-                    <div class="time-separator">:</div>
-                    <div class="time-block">
-                        <div id="hours" class="time-value">00</div>
-                        <div class="time-label">Hours</div>
-                    </div>
-                    <div class="time-separator">:</div>
-                    <div class="time-block">
-                        <div id="minutes" class="time-value">00</div>
-                        <div class="time-label">Minutes</div>
-                    </div>
-                    <div class="time-separator">:</div>
-                    <div class="time-block">
-                        <div id="seconds" class="time-value">00</div>
-                        <div class="time-label">Seconds</div>
-                    </div>
-                </div>
-                <div id="launch-live" class="live-message hidden">
-                    <div class="live-dot"></div>
-                    ALPINE IS NOW LIVE
-                </div>
-            </div>
+<nav>
+  <a class="nav-logo" href="#">
+    <img src="alplinelogo.png" alt="Alpline">
+    <span>Alpline</span>
+  </a>
+  <div class="nav-dots">
+    <div class="nav-dot"></div>
+    <div class="nav-dot"></div>
+    <div class="nav-dot"></div>
+  </div>
+</nav>
 
-            <!-- Waitlist Info -->
-            <div class="waitlist-info">
-                <div class="waitlist-count">
-                    <span id="waitlist-number">2,847</span> skiers already joined
-                </div>
-                <div class="progress-container">
-                    <div class="progress-bar">
-                        <div id="progress-fill" class="progress-fill" style="width: 68%"></div>
-                    </div>
-                    <div class="progress-text">Beta preparation • 68%</div>
-                </div>
-            </div>
+<main>
+  <p class="eyebrow">Intelligent Ski Companion</p>
 
-            <!-- Signup -->
-            <div id="signup-section" class="signup-card">
-                <h2>Join the Waitlist</h2>
-                <p class="signup-subtitle">Be the first to experience AI-powered mountain planning, live snow intelligence, and personalised ski guidance.</p>
-                
-                <form id="waitlist-form" class="signup-form">
-                    <div class="form-group">
-                        <input type="email" id="email" placeholder="your@email.com" required>
-                    </div>
-                    <button type="submit" class="btn-primary btn-large">Get Early Access</button>
-                </form>
-                
-                <div id="form-success" class="success-message hidden">
-                    <strong>Thank you!</strong> You're on the list. We'll notify you on launch day.
-                </div>
-            </div>
-        </div>
-    </section>
+  <h1>Your Mountain,<br><em>Perfected.</em></h1>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <p>© 2026 Alpine. All rights reserved.</p>
-                <div class="footer-links">
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Contact</a>
-                </div>
-            </div>
-        </div>
-    </footer>
+  <p class="sub">AI-powered mountain planning, live snow intelligence, and personalised ski guidance — all in one premium companion.</p>
 
-    <script src="script.js"></script>
+  <div class="stats">
+    <div class="stat">
+      <span class="stat-val">200+</span>
+      <span class="stat-label">Resorts</span>
+    </div>
+    <div class="stat">
+      <span class="stat-val">Live</span>
+      <span class="stat-label">Conditions</span>
+    </div>
+    <div class="stat">
+      <span class="stat-val">AI</span>
+      <span class="stat-label">Powered</span>
+    </div>
+  </div>
+
+  <div class="countdown" id="countdown">
+    <div class="unit">
+      <div class="num-wrap"><span class="num" id="cd-d">00</span></div>
+      <span class="unit-label">Days</span>
+    </div>
+    <span class="sep">:</span>
+    <div class="unit">
+      <div class="num-wrap"><span class="num" id="cd-h">00</span></div>
+      <span class="unit-label">Hours</span>
+    </div>
+    <span class="sep">:</span>
+    <div class="unit">
+      <div class="num-wrap"><span class="num" id="cd-m">00</span></div>
+      <span class="unit-label">Mins</span>
+    </div>
+    <span class="sep">:</span>
+    <div class="unit">
+      <div class="num-wrap"><span class="num" id="cd-s">00</span></div>
+      <span class="unit-label">Secs</span>
+    </div>
+  </div>
+
+  <div class="launched" id="launched">We're live. Welcome aboard. 🎿</div>
+
+  <div class="cta">
+    <div class="cta-btn">Launching 1 August 2026</div>
+    <p class="cta-note">alpline.app</p>
+  </div>
+</main>
+
+<script>
+  const TARGET = new Date(2026, 7, 1, 18, 0, 0); // August 1 2026, 18:00 local
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function tick() {
+    const now  = new Date();
+    let diff   = Math.max(0, TARGET - now);
+
+    const d = Math.floor(diff / 86400000); diff -= d * 86400000;
+    const h = Math.floor(diff / 3600000);  diff -= h * 3600000;
+    const m = Math.floor(diff / 60000);    diff -= m * 60000;
+    const s = Math.floor(diff / 1000);
+
+    document.getElementById('cd-d').textContent = pad(d);
+    document.getElementById('cd-h').textContent = pad(h);
+    document.getElementById('cd-m').textContent = pad(m);
+    document.getElementById('cd-s').textContent = pad(s);
+
+    if (TARGET <= now) {
+      document.getElementById('countdown').style.display = 'none';
+      document.getElementById('launched').style.display  = 'block';
+    }
+  }
+
+  tick();
+  setInterval(tick, 1000);
+</script>
+
 </body>
 </html>
